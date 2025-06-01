@@ -1032,20 +1032,646 @@
  *
  */
 
-const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+// const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-function foo(array, count) {
-  const res = [];
+// function foo(array, count) {
+//   const res = [];
 
-  for (let i = 0; i < array.length; i += count) {
-    const a = array.slice(i, i + count);
-    // console.log(a);
-    res.push(a);
-  }
+//   for (let i = 0; i < array.length; i += count) {
+//     const a = array.slice(i, i + count);
+//     // console.log(a);
+//     res.push(a);
+//   }
 
-  return res;
-}
+//   return res;
+// }
 
-console.log(foo(numbers, 3));
+// console.log(foo(numbers, 3));
 
 // ---------------------------------------------------------------------------------
+
+// function calculateTotalPrice(order) {
+//   let total = 0;
+
+//   for (let i = 0; i < order.length; i++) {
+//     total += order[i];
+//   }
+//   return total;
+// }
+
+// console.log(calculateTotalPrice([12, 85, 37, 4]));
+
+// ------------------------------------------------------------------------------
+
+// function checkStorage(storage, item) {
+//   let lowerItem = item.toLowerCase();
+
+//   for (i = 0; i < storage.length; i++) {
+//     if (storage.indexOf(lowerItem) !== -1) {
+//       return `${lowerItem} is available to order!`;
+//     } else {
+//       return "Sorry! We are out of stock!";
+//     }
+//   }
+// }
+
+// console.log(checkStorage(["apple", "plum", "pear"], "plum"));
+
+// ------------------------------------------------------------------------------
+
+/**
+ * Функція getCommonElements(array1, array2), приймає два масиви (array1 та array2) довільної довжини в якості параметрів.
+ * Доповни код функції:
+ * Створи порожній масив для зберігання нового масиву.
+ * Використай цикл for для ітерації кожного елемента у array1.
+ * У тілі циклу перевір, чи поточний елемент існує у array2 за допомогою методу includes.
+ * Якщо він існує, то додай елемент до нового масиву.
+ * Поверни наповнений масив спільних елементів як результат роботи функції.
+ */
+
+// function getCommonElements(array1, array2) {
+//   let array = [];
+
+//   for (let i = 0; i < array1.length; i++) {
+//     if (array2.includes(array1[i])) {
+//       array.push(array1[i]);
+//     }
+//   }
+
+//   return array;
+// }
+
+// console.log(getCommonElements([1, 2, 3], [2, 4])); //[2]
+// console.log(getCommonElements([1, 2, 3], [2, 1, 17, 19])); //[1, 2]
+// console.log(getCommonElements([24, 12, 27, 3], [12, 8, 3, 36, 27])); //[12, 27, 3]
+
+// ------------------------------------------------ Параметри за замовчуванням -----------------------------------------------
+
+// Функції можуть мати параметри зі значеннями за замовчуванням, тобто необов'язкові параметри.
+// Ці значення використовуються в тому випадку, якщо функція викликається без передавання відповідного
+// аргументу для цього параметра.Значенням за замовчуванням може бути будь - який тип даних.
+
+// function greet(username = "Guest") {
+//   console.log(`Hello, ${username}!`);
+// }
+
+// greet("Jacob"); // "Hello, Jacob!"
+// greet(); // "Hello, Guest!"
+
+// -------------------------------------------------------------------------------------------------------------------------
+
+// Приклад із кількома параметрами
+
+// function count(from, to, step = 1) {
+//   console.log(`from: ${from}, to: ${to}, step: ${step}`);
+
+//   for (let i = from; i <= to; i += step) {
+//     // ...
+//   }
+// }
+
+// count(1, 15, 4); // "from: 1, to: 15, step: 4"
+// count(1, 15); // "from: 1, to: 15, step: 1"
+
+// -------------------------------------------------------------------------------------------------------------------------
+
+/** Функція calculateTax(amount, taxRate) оголошує два параметри:
+ * amount - число, сума від якої потрібно обчислити податок. Обов'язковий параметр.
+ * taxRate - число, податкова ставка. Необов'язковий параметр. За замовчуванням його значення має бути 0.2.
+ * Доповни код функції так, щоб вона повертала суму податку - результат множення суми на податкову ставку.
+ */
+
+// function calculateTax(amount, taxRate = 0.2) {
+//   return amount * taxRate;
+// }
+
+// console.log(calculateTax(100, 0.1)); //10
+// console.log(calculateTax(200, 0.3)); //60
+// console.log(calculateTax(100)); //20
+
+// --------------------------------------------------------------------------------------------------------------------------
+
+// ------------------------------------------------------ ОБ'ЄКТИ ------------------------------------------------------------
+
+// const propName = "name";
+// const user = {
+//   age: 25,
+// };
+
+// user[propName] = "Henry Sibola"; //звертаємось до обєкту за ключем(імям властивості) - name
+// console.log(user.name); // "Henry Sibola"
+// console.log(user);
+
+// ------------------------------------------------------------------------------------------------
+
+// const propName = "name";
+// const user = {
+//   age: 25,
+//   // ключ цієї властивості буде взято зі значення змінної propName
+//   [propName]: "Henry Sibola",
+// };
+
+// console.log(user.name); // "Henry Sibola"
+
+// -------------------------------- Обчислювальні властивості --------------------------------------
+
+// const emailInputName = "email";
+// const passwordInputName = "password";
+
+// const credentials = {};
+
+// credentials[emailInputName] = "henry.carter@aptmail.com";
+// credentials[passwordInputName] = "jqueryismyjam";
+
+// console.log(credentials);
+
+// ----------------------------------- Перебір об'єкта -------------------------------------------
+
+// ------------------------------------ Цикл for...in --------------------------------------------
+/**
+ * На відміну від масиву або рядка, об'єкт — це не ітерабельна сутність, тобто його не можна перебрати
+ * циклами for або for...of.  * Для перебирання об'єктів використовується спеціальний цикл for...in,
+ * який перебирає ключі об'єкта object.
+ */
+
+// const book = {
+//   title: "The Last Kingdom",
+//   author: "Bernard Cornwell",
+//   genres: ["historical prose", "adventure"],
+//   rating: 8.38,
+// };
+
+// for (const key in book) {
+//   console.log(key); // Ключ
+//   console.log(book[key]); // Значення властивості з таким ключем
+// }
+
+// -----------------------------------------------------------------------------------------------
+
+/**
+ * Перебери об'єкт apartment, використовуючи цикл for...in, і запиши
+ * в масив keys всі його ключі, а в масив values всі значення його властивостей.
+ */
+
+// const apartment = {
+//   descr: "Spacious apartment in the city center",
+//   rating: 4,
+//   price: 2153,
+// };
+
+// const keys = [];
+// const values = [];
+
+// for (const key in apartment) {
+//   keys.push(key);
+//   values.push(apartment[key]);
+// }
+
+// console.log(keys);
+// console.log(values);
+
+// ------------------------------------- Метод Object.keys() -----------------------------------------------
+
+/**
+ * Скомбінувавши результат Object.keys() і цикл for...of,
+ * можна зручно перебрати властивості об'єкта, не вдаючись до використання циклу for...in.
+ */
+
+// const book = {
+//   author: "Bernard Cornwell",
+//   genres: ["historical prose", "adventure"],
+//   rating: 8.38,
+// };
+// const keys = Object.keys(book);
+
+// for (const key of keys) {
+//   // Ми перебираємо масив ключів об'єкта і на кожній ітерації отримуємо ключ і значення властивості.
+
+//   console.log(key); // Ключ
+//   console.log(book[key]); // Значення властивості
+// }
+
+// -----------------------------------------------------------------------------------
+
+/**
+ * Перебери об'єкт apartment, використовуючи метод Object.keys() і цикл for...of.
+ * Запиши у змінну keys масив ключів властивостей об'єкта apartment, і додай в масив values
+ * всі значення його властивостей.
+ */
+
+// const apartment = {
+//   descr: "Spacious apartment in the city center",
+//   rating: 4,
+//   price: 2153,
+// };
+
+// const values = [];
+// const keys = Object.keys(apartment);
+
+// for (const key of keys) {
+//   values.push(apartment[key]);
+// }
+
+// console.log(values);
+
+// -------------------------------------------------------------------------------------
+
+/**
+ * Виконай рефакторинг функції countProps(object), замінивши перебір ключів
+ * за допомогою циклу for…in на метод Object.keys() для отримання масиву властивостей.
+ * Функція має повернути кількість властивостей в об'єкті object.
+ *
+ */
+
+// function countProps(object) {
+//   let propCount = 0;
+
+//   for (const key in object) {
+//     if (object.hasOwnProperty(key)) {
+//       propCount += 1;
+//     }
+//   }
+
+//   return propCount;
+// }
+
+// console.log(countProps({})); //0
+// console.log(countProps({ name: "Mango", age: 2 })); //2
+// console.log(countProps({ mail: "poly@mail.com", isOnline: true, score: 500 })); //3
+
+// ------------------------------------------------------------------------------
+
+// function countProps(object) {
+//   return Object.keys(object).length;
+// }
+
+// console.log(countProps({})); //0
+// console.log(countProps({ name: "Mango", age: 2 })); //2
+// console.log(countProps({ mail: "poly@mail.com", isOnline: true, score: 500 })); //3
+
+// -----------------------------------------------------------------------------
+
+// function foo(obj) {
+//     obj.mood = "happy";
+//     obj.hobby = "skydiving";
+//     obj.premium = false;
+
+//     const keys = Object.keys(obj);
+//     for(const key of keys) {
+//         console.log(`${key}: ${obj[key]}`);
+//     }
+// }
+
+// console.log(foo(user));
+// foo(user1);
+
+// ------------------------------------------------------------------------------------------
+
+// -------------------------------------------------- Масив об'єктів ---------------------------------
+/**
+ * - перебір масива;
+ * - пошук об'єкта за значенням властивості;
+ * - колекція значень властивості;
+ */
+
+// const friends = [
+//   { name: "Ross", online: false },
+//   { name: "Joey", online: true },
+//   { name: "Chandler", online: false },
+//   { name: "Phoebe", online: true },
+//   { name: "Monica", online: true },
+//   { name: "Rachel", online: false },
+// ];
+
+/**
+ * Пошук друга за іменем
+ */
+
+// function findByName(arr, userName) {
+//   for (const item of arr) {
+//     if (item.name.toLowerCase() === userName.toLowerCase()) {
+//       return item;
+//     }
+//   }
+//   return "Not found";
+// }
+
+// console.log(findByName(friends, "Ross"));
+
+/**
+ *  Отримуємо імена всіх друзів
+ */
+
+// function getAllNanes(arr) {
+//   const names = [];
+
+//   for (const item of arr) {
+//     names.push(item.name);
+//   }
+//   return names;
+// }
+
+// console.log(getAllNanes(friends));
+
+/**
+ * Отримаємо імена лише тих друзів, які зараз знаходяться онлайн
+ */
+
+// function getOnline(arr) {
+//   const online = [];
+
+//   for (const item of arr) {
+//     if (item.online === true) {
+//     if (item.online) { // true можна не первіряти оскільки якщо true ми й так попадаємо в цикл, а якщо false то ні
+//       online.push(item);
+//     }
+//   }
+
+//   return online;
+// }
+
+// console.log(getOnline(friends));
+
+/**
+ * Напишіть функцію calcTotalPrice (stones, stoneName)
+ * яка приймає масив обєктів та рґдок з назвою каменю.
+ * Функція рахує і повертає загальну вартість каміння
+ * з таким імям, ціною та кількістю обєктів
+ */
+
+// const stones = [
+//   { name: "Смарагд", price: 1300, quantity: 4 },
+//   { name: "Діамант", price: 2700, quantity: 3 },
+//   { name: "Сапфір", price: 400, quantity: 7 },
+//   { name: "Сапфір", price: 400, quantity: 7 },
+//   { name: "Щебінь", price: 200, quantity: 2 },
+// ];
+
+// function calcTotalPrice(stones, stoneName) {
+//   let sum = 0;
+//   for (const item of stones) {
+//     if (item.name === stoneName) {
+//       sum += item.price * item.quantity;
+//     }
+//   }
+//   return sum;
+// }
+
+// console.log(calcTotalPrice(stones, "Сапфір"));
+
+/**
+ * ---------------------------------------------- Об'єкти -------------------------------------------
+ *
+ * - методи об'єкта (функція в об'єкті називається методом)
+ * - доступ до властивостей об'єкта через ключову слово this (this - це обєкт в контексті якого була викликана функція)
+ * іншими словами це обєкт який стоїть зліва від функції в момент її виклику і туди збережуться обʼкт який викликав нашу функцію
+ * - зміна за посиланням (зберегти посилання на функцію у властивість обєкту)
+ */
+
+// const playlist = {
+//   name: "playlist",
+//   rating: 5,
+//   tracks: ["track-1", "track-2", "track-3"],
+//   changeName(newName) {
+//     this.name = newName;
+//   },
+
+//   addTrack(newTrack) {
+//     this.tracks.push(newTrack);
+//   },
+
+//   updateRating(newRating) {
+//     this.rating = newRating;
+//   },
+
+//   getName() {
+//     return this.name;
+//   },
+// };
+
+// const playlist2 = {
+//   name: "playlist2",
+//   rating: 4,
+//   tracks: ["track-4", "track-5"],
+// };
+
+// playlist2.changeName = playlist.changeName;
+
+// playlist.changeName("Playlist lalala 1"); // this = playlist
+// playlist2.changeName("Playlist lululu 2"); // this = playlist2
+// playlist.addTrack("track-4");
+// playlist.updateRating(3);
+// playlist.getName();
+
+// console.log("Playlist", playlist);
+// console.log("Playlist2", playlist2);
+// console.log();
+
+// ----------------------------------------------------------------------------------------------------------------
+
+/**
+ * Синтаксис spread і rest
+ *
+ * Залишкові параметри
+ * Збір частини аргументів
+ * Входження параметрів
+ * Створення масиву
+ * Створення обєкту
+ */
+
+// function foo(...rest) {
+//   // збирає всі параметри, які приходять в нашу функцію і складе їх в масив
+// console.log(rest);
+
+// }
+
+// foo(1, 2, 3);
+// foo(1, 2, 3, 4, 50);
+
+// --------------------------------------------------------------------------------------------------------------
+
+// function foo(a, b, ...rest) {
+//   // витягує з масиву певну кількість параметрів, а всі решту складає в масив
+//   console.log(a, b);
+//   console.log(rest);
+// }
+
+// foo(1, 2, 3, 4);
+// foo(10, 20, 30, 40, 50);
+
+// -------------------------------------------------------------------------------------------------------------
+
+// function foo(...args) {
+//   console.log(args);
+// }
+
+// foo({ x: 1, y: 2, c: 4 });
+
+// ------------------------------------------------------------------------------------------------------------
+
+// const numbers = [
+//   1000,
+//   ...[1, 2, 3], // спред оператор (витягує елементи з масиву)
+//   2000,
+//   ...[1, 2, 3], // спред оператор (витягує елементи з масиву)
+//   3000,
+// ];
+
+// console.log(numbers);
+
+// --------------------------------------------------------------------------------------------------------------
+
+/**
+ * Пошук найменшої або найбільшої температури (числа)
+ */
+
+// const temps = [18, 14, 12, 21, 17, 29, 24];
+
+// console.log(Math.min(...temps));
+// console.log(Math.max(...temps));
+
+// -----------------------------------------------------------------------------------------------------------
+
+/**
+ * Створення масиву і ти за посиланням
+ */
+
+// const a = [1, 2, 3];
+// const b = [...a]; // витягне значення з масиву а і помістить його в новий масив
+// з новим посиланням на масив в тілі яйого будуть зберігатись значення з масиву а
+
+// a[0] = 100;
+
+// console.log(a);
+// console.log(b);
+
+// -----------------------------------------------------------------------------------------------------------
+
+/**
+ * Поєднуємо кідбка масивів в один через spread
+ */
+
+// const lastWeekTemps = [1, 2, 3];
+// const currentTemps = [4, 5, 6];
+// const nextWeekTemps = [7, 8, 9];
+
+// const allTemps = [...lastWeekTemps, ...currentTemps, ...nextWeekTemps];
+
+// console.log(allTemps);
+
+// -----------------------------------------------------------------------------------------------------------
+
+/**
+ * Створення обєкту
+ */
+
+// const objA = { x: 1, y: 2 };
+// const objB = { x: 0, q: 3 };
+
+// const objC = {
+//   ...objA, // x: 1, y: 2
+//   x: 10, // x: 10, y: 2
+//   ...objB, // x: 0, y: 2, q: 3
+//   y: 20, // x: 0, y: 20, q: 3
+// };
+
+// console.log(objC);
+
+// -----------------------------------------------------------------------------------------------------------
+
+/**
+ * Оновлюємо налаштування користувача
+ */
+
+// const defaultSettigs = {
+//   theme: "light",
+//   showNotifications: true,
+//   hideSidebar: falce,
+// };
+
+// const userSettings = {
+//   theme: "light",
+//   showNotifications: false,
+//   hideSidebar: true,
+// };
+
+// const settings = {
+//   ...defaultSettigs,
+//   ...userSettings,
+// };
+
+// console.log(settings);
+
+// -----------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------
+
+/**
+ * Типів транзакцій всього два
+ * Можна покласти або зняти гроші з рахунку
+ */
+
+const Transaction = {
+  DEPOSIT: "deposit",
+  WITHDRAW: "withdraw",
+};
+
+/**
+ * Кожна тразакція це обєкт із властивостями: id, type та amount
+ */
+
+const account = {
+  // Поточний баланс рахунку
+  balance: 0,
+
+  // Історія транзакцій
+
+  transations: [],
+
+  /**
+   * Метод створює та повертає обєкт транзакції.
+   * Приймає суму та тип транзакції
+   */
+
+  createTransaction(amount, type) {},
+
+  /**
+   * Метод, що відповідає за додавання суми до балансу.
+   * Приймає суму транзакції
+   * Викликає createTransaction для створення обєкту транзакції
+   * після чого додає його до історії транзакції
+   */
+
+  deposit(amount) {},
+
+  /**
+   * Метод, що відповідає за зняття суми з балансу.
+   * Приймає суму транзакції.
+   * Викликає createTransaction для створення обєкта транзакції
+   * після чого додає його до історії транзакції.
+   *
+   * Якщо amount більше ніж поточний баланс, виводить повідомлення
+   * про те, що зняття такої суми не можливе, недостатньо коштів.
+   */
+
+  withdraw(amount) {},
+
+  /**
+   * Метод повертає поточний баланс
+   */
+
+  getBalance() {},
+
+  /**
+   * Метод шукає та повертає обєкт транзакції по id
+   */
+
+  getTransactionDetails(id) {},
+
+  /**
+   * Метод повертає кількіть коштів
+   * певного типу транзакції з усієї історії транзакцій
+   */
+
+  getTransactionTotal(type) {},
+};
