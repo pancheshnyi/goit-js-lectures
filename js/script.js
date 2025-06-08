@@ -1858,19 +1858,79 @@
 
 // --------------------------------------------------------------------------------------------------------------
 
-const students = [
-  { name: "Mango", score: 83 },
-  { name: "Poly", score: 59 },
-  { name: "Ajax", score: 37 },
-  { name: "Kiwi", score: 94 },
-  { name: "Houston", score: 64 },
-];
+// const students = [
+//   { name: "Mango", score: 83 },
+//   { name: "Poly", score: 59 },
+//   { name: "Ajax", score: 37 },
+//   { name: "Kiwi", score: 94 },
+//   { name: "Houston", score: 64 },
+// ];
 
-// Назва акумулятора може бути довільною, це просто параметр функції
-const totalScore = students.reduce((total, student) => {
-  return total + student.score;
-}, 0);
+// // Назва акумулятора може бути довільною, це просто параметр функції
+// const totalScore = students.reduce((total, student) => {
+//   return total + student.score;
+// }, 0);
 
-const averageScore = totalScore / students.length;
+// const averageScore = totalScore / students.length;
+
+// --------------------------------------------------------------------------------------------------------------
+
+// const calculateTotalBalance = (users) => {
+//   return users.reduce((sum, user) => sum + user.balance, 0);
+// };
+
+// --------------------------------------------------------------------------------------------------------------
+/**
+ * Масив books містить масив об'єктів книг, кожен з яких містить властивості title, author, rating.
+ * Доповни код таким чином, щоб:
+ * У змінній sortedByAuthorName вийшов масив книг, відсортований за ім'ям автора в алфавітному порядку.
+ * У змінній sortedByReversedAuthorName вийшов масив книг, відсортований за ім'ям автора у зворотному алфавітному порядку.
+ * У змінній sortedByAscendingRating вийшов масив книг, відсортований за зростанням рейтингу.
+ * У змінній sortedByDescentingRating вийшов масив книг, відсортований за спаданням рейтингу.
+ */
+
+// const books = [
+//   {
+//     title: "The Last Kingdom",
+//     author: "Bernard Cornwell",
+//     rating: 8.38,
+//   },
+//   {
+//     title: "Beside Still Waters",
+//     author: "Robert Sheckley",
+//     rating: 8.51,
+//   },
+//   {
+//     title: "The Dream of a Ridiculous Man",
+//     author: "Fyodor Dostoevsky",
+//     rating: 7.75,
+//   },
+//   {
+//     title: "Redder Than Blood",
+//     author: "Tanith Lee",
+//     rating: 7.94,
+//   },
+//   {
+//     title: "Enemy of God",
+//     author: "Bernard Cornwell",
+//     rating: 8.67,
+//   },
+// ];
+
+// const sortedByAuthorName = books.toSorted((firstAutor, secondAutor) =>
+//   firstAutor.author.localeCompare(secondAutor.author)
+// );
+
+// const sortedByReversedAuthorName = books.toSorted((firstAutor, secondAuthor) =>
+//   secondAuthor.author.localeCompare(firstAutor.author)
+// );
+
+// const sortedByAscendingRating = books.toSorted(
+//   (minRating, maxRating) => minRating.rating - maxRating.rating
+// );
+
+// const sortedByDescentingRating = books.toSorted(
+//   (minRatind, maxRating) => maxRating.rating - minRatind.rating
+// );
 
 // --------------------------------------------------------------------------------------------------------------
