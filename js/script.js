@@ -1934,3 +1934,214 @@
 // );
 
 // --------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------
+
+/**
+ * Необхідно отримати масив їхніх імен, відсортованих за зростанням балів за тест.
+ * Для цього:
+ * Відсортуємо масив методом toSorted(),
+ * Після чого методом map() створимо масив значень властивості name з відсортованого масиву.
+ */
+
+// const students = [
+//   { name: "Mango", score: 83, courses: ["mathematics", "physics"] },
+//   { name: "Poly", score: 59, courses: ["science", "mathematics"] },
+//   { name: "Ajax", score: 37, courses: ["physics", "biology"] },
+//   { name: "Kiwi", score: 94, courses: ["literature", "science"] },
+// ];
+
+// На масиві викликаємо метод toSorted()
+// До результату роботи методу toSorted() застосовуємо метод map()
+// Змінній names присвоюється результат роботи методу map()
+
+// Отримаємо масив унікальних відвідуваних предметів, відсортований за алфавітом.
+
+// const names = students
+//   .toSorted((a, b) => a.score - b.score)
+//   .map((student) => student.name);
+
+// console.log(names); // ["Ajax", "Poly", "Mango", "Kiwi"]
+
+// На вихідному масиві викликаємо flatMap() і робимо розгладжений масив усіх курсів
+// До результату методу flatMap() застосовуємо метод filter() для фільтрації унікальних елементів
+// На результаті методу filter() викликаємо toSorted()
+// Змінній uniqueSortedCourses присвоюється результат роботи методу toSorted()
+
+// const uniqueSortedCourses = students
+//   .flatMap((student) => student.courses)
+//   .filter((course, index, array) => array.indexOf(course) === index)
+//   .toSorted((a, b) => a.localeCompare(b));
+
+// console.log(uniqueSortedCourses); // ["biology", "science", "literature", "mathematics", "physics"]
+
+// Ланцюжок методів може бути довільної довжини, але зазвичай не більше 2-3 операцій.
+
+// -------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------
+
+/**
+ * Масив books містить масив об'єктів книг, кожен з яких містить властивості title, author, rating.
+ *
+ * Доповни код таким чином, щоб у змінній names вийшов масив імен авторів в алфавітному порядку,
+ * рейтинг книг яких більший за значення змінної MIN_BOOK_RATING. Використовуй ланцюжок методів.
+ *
+ */
+
+// const books = [
+//   {
+//     title: "The Last Kingdom",
+//     author: "Bernard Cornwell",
+//     rating: 8.38,
+//   },
+//   {
+//     title: "Beside Still Waters",
+//     author: "Robert Sheckley",
+//     rating: 8.51,
+//   },
+//   {
+//     title: "The Dream of a Ridiculous Man",
+//     author: "Fyodor Dostoevsky",
+//     rating: 7.75,
+//   },
+//   { title: "Redder Than Blood", author: "Tanith Lee", rating: 7.94 },
+//   {
+//     title: "The Dreams in the Witch House",
+//     author: "Howard Lovecraft",
+//     rating: 8.67,
+//   },
+// ];
+// const MIN_BOOK_RATING = 8;
+
+// const names = books
+//   .filter((item) => item.rating > MIN_BOOK_RATING)
+//   .map((name) => name.author)
+//   .toSorted((a, b) => a.localeCompare(b));
+
+// --------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------
+
+/**
+ * Контекст виконання функції. Ключове слово this
+ */
+
+// const user = {
+//   username: "Victor",
+//   showName() {
+//     // ✅ Віктор біжить швидко, тому що він (this) намагається зловити поїзд.
+//     console.log(this.username);
+//   },
+// };
+
+// user.showName();
+
+/**
+ * Метод showName — це функція, яка викликається в контексті об'єкта user.
+ * Під час її виклику в this записується посилання на об'єкт user, і ми можемо звертатися до його властивостей і методів.
+ * Під час виклику методу user.showName() значенням this буде посилання на об’єкт user, у контексті якого вона була викликана.
+ */
+
+// function sayHello(greeting) {
+//   console.log(`${greeting}, ${this.name}!`);
+// }
+
+// const user = {
+//   name: "Alice",
+// };
+
+// const greet = sayHello.bind(user);
+
+// greet("Hello");
+
+// -----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+
+// "use strict";
+
+// const customer = {
+//   firstName: "Jacob",
+//   lastName: "Mercer",
+//   getFullName() {
+//     return `${this.firstName} ${this.lastName}`;
+//   },
+// };
+
+// function makeMessage(callback) {
+//   // callback() — це виклик методу getFullName в глобальному контексті
+//   const username = callback();
+//   console.log(`Processing an application from ${username}`);
+// }
+
+// makeMessage(customer.getFullName); // TypeError: Cannot read properties of undefined (reading 'firstName')
+
+// -----------------------------------------------------------------------------------
+
+/**
+ * У цьому випадку метод getFullName передається як колбек-функція callback і втрачає контекст об'єкта customer.
+ * Це призводить до помилки, оскільки значення this у методі getFullName, коли він викликається як колбек
+ * у глобальному контексті, є undefined. Звертаючись до властивостей firstName і lastName, ми отримаємо помилку,
+ * оскільки undefined — це не об'єкт.
+ *
+ * Щоб уникнути цієї втрати контексту, можна використати метод bind(). Замість передачі оригінального методу
+ * getFullName, ми передаємо його копію, до якої прив'язаний контекст об'єкта customer.
+ */
+
+// const customer = {
+//   firstName: "Jacob",
+//   lastName: "Mercer",
+//   getFullName() {
+//     return `${this.firstName} ${this.lastName}`;
+//   },
+// };
+
+// function makeMessage(callback) {
+//   const username = callback();
+//   console.log(`Processing an application from ${username}`);
+// }
+
+// makeMessage(customer.getFullName.bind(customer)); // "Processing an application from Jacob Mercer"
+
+// -----------------------------------------------------------------------------------
+// ----------------------- Перебір власних властивостей -------------------------------
+// --------------------------------цикл for...in--------------------------------------
+// -----------------------------------------------------------------------------------
+
+// const animal = { legs: 4 };
+// const dog = Object.create(animal);
+// dog.name = "Mango";
+
+// for (const key in dog) {
+//   console.log(key); // "name" "legs"
+// }
+
+/**
+ * необхідно на кожній ітерації додати перевірку на власну властивість методом obj.hasOwnProperty(key)
+ */
+
+// const animal = { legs: 4 };
+// const dog = Object.create(animal);
+// dog.name = "Mango";
+
+// for (const key in dog) {
+//   if (dog.hasOwnProperty(key)) {
+//     console.log(key); // "name"
+//   }
+// }
+
+// -----------------------------------------------------------------------------------
+// ----------------------- Перебір власних властивостей -------------------------------
+// ------------------------------ цикл for...of ---------------------------------------
+
+// const animal = { legs: 4 };
+// const dog = Object.create(animal);
+// dog.name = "Mango";
+
+// console.log(Object.keys(dog)); // ["name"]
+// console.log(Object.values(dog)); // ["Mango"]
+
+// for (const key of Object.keys(dog)) {
+//   console.log(key); // "name"
+// }
