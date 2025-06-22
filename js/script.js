@@ -2379,3 +2379,410 @@ console.log(bmw.getPrice());
 
 bmw.price = 5000; // звертаємо до сеттера і передаємо нове значення price
 console.log(bmw.price); // звертаємось до геттера і отримуємо значення price
+
+//-------------------------------------------------------------------------------------------------------------
+/**
+ * ------------------------------------------- DOM ------------------------------------------------------------
+ */
+
+const image = document.querySelector(".image");
+
+console.log(image.src);
+console.log(image.alt);
+
+image.src = "https://picsum.photos/id/13/640/480";
+image.alt = "River bank";
+
+//--------------------------------------- Доступ до властивостей ------------------------------------------------
+
+const link = document.querySelector(".link");
+console.log(link.classList);
+
+link.href = "https://neo.goit.global";
+
+//--------------------------------------- Властивість textContent ------------------------------------------------
+
+const el = document.querySelector(".text");
+
+el.textContent = "Username: Poly"; // властивість textContent можна як читати, так і змінювати
+
+const hasActiveClass = link.classList.contains("is-active"); // метод очікує аргументом рядок з іменем класу
+// та повертає true або false, залежно від наявності класу className в елемента
+
+link.classList.add("special"); // метод очікує аргументом рядок з іменем класу та додає клас className
+// до списку класів елемента
+
+link.classList.remove("is-active"); // метод очікує аргументом рядок з іменем класу та видаляє клас className
+// зі списку класів елемента
+
+link.classList.toggle("is-active"); // метод працює як перемикач: якщо клас className відсутній, то додає
+// його в кінець списку класів і навпаки, якщо клас className присутній — видаляє його
+
+link.classList.replace("special", "regular"); // метод очікує 2 аргументи рядка (перший — стара назва класу,
+// другий — нова назва класу) та замінює існуючий клас oldClassName на вказаний newClassName
+
+// -------------------------------------- Властивість style ----------------------------------------------
+
+const button = document.querySelector(".btn");
+
+button.style.backgroundColor = "teal"; // властивість style використовується для читання та зміни вбудованих стилів
+button.style.fontSize = "24px";
+button.style.textAlign = "center";
+// Під час запису властивості вони записуються в camelCase нотації, замість дефісів, які зазвичай використовуються
+// в CSS,тобто background-color перетворюється на backgroundColor
+
+// ------------------------------ Метод element.hasAttribute(nameAttribute) ---------------------------------------
+
+const image = document.querySelector(".image");
+
+console.log(image.hasAttribute("src")); // true
+console.log(image.hasAttribute("href")); // false
+
+// ------------------------------ Метод element.getAttribute(nameAttribute) ---------------------------------------
+
+console.log(image.getAttribute("alt")); // "Rocks and waterfall"
+
+// ------------------------------ Метод element.setAttribute(nameAttribute, value) ---------------------------------------
+
+image.setAttribute("alt", "Amazing nature");
+console.log(image.getAttribute("alt")); // Amazing nature
+
+// ------------------------------ Власні атрибути ---------------------------------------
+
+// ---------------------------------- data-action ---------------------------------------
+
+const saveBtn = document.querySelector('button[data-action="save"]');
+const closeBtn = document.querySelector('button[data-action="close"]');
+
+// ---------------------------- Отримання значень ---------------------------------------
+// ----------------------------------- dataset ------------------------------------------
+
+console.log(saveBtn.dataset.action); // "save"
+console.log(closeBtn.dataset.action); // "close"
+
+//-------------------------------- Зміна значень ------------------------------------------
+// Змінити значення існуючого data-атрибута або додати новий можна так само, як і будь-якої
+// іншої властивості об'єкта в JavaScript. Щоб це зробити, треба отримати доступ до DOM-елемента,
+// а потім змінити/задати значення властивості в об'єкті dataset
+
+// Змінюємо значення data-action для кнопки saveBtn
+saveBtn.dataset.action = "update";
+
+// Додаємо новий data-атрибут data-role
+saveBtn.dataset.role = "admin";
+
+// Перевіримо нові значення
+console.log(saveBtn.dataset.action); // "update"
+console.log(saveBtn.dataset.role); // "admin"
+
+//-------------------------------- Створення елементів ------------------------------------------
+
+/**
+ * вибирати або змінювати вже існуючі елементи
+ * видаляти елементи
+ * створювати нові елементи й додавати їх у документ
+ */
+
+// document.createElement(tagName)
+// Після створення елемента heading отримуємо посилання на його об’єкт у пам'яті.
+// З цього моменту можна звертатися до властивостей цього об’єкта і змінювати їх
+// ще до того, як вставимо цей елемент у DOM.
+
+const heading = document.createElement("h1");
+headding.classList.add("title");
+heading.textContent = "This is a heading";
+console.log(heading); // <h1 class="title">This is a heading</h1>
+
+const image = document.createElement("img");
+image.src = "https://picsum.photos/id/11/320/240";
+image.alt = "Nature";
+console.log(image); // <img src="https://picsum.photos/id/11/320/240" alt="Nature" />
+
+//-------------------------------- Додавання елементів ------------------------------------------
+
+const list = document.querySelector(".usernames");
+
+// Adds an item to the end of the list
+const lastItem = document.createElement("li");
+lastItem.textContent = "Poly";
+list.append(lastItem);
+
+// Adds an item to the beginning of the list
+const firstItem = document.createElement("li");
+firstItem.textContent = "Ajax";
+list.prepend(firstItem);
+
+//-------------------------------- innerHTML ------------------------------------------
+
+/**
+ * Властивість innerHTML доступна і для читання, і для запису. Якщо записати в неї рядок
+ * з HTML-тегами, то браузер під час парсингу рядка перетворить його у валідні елементи
+ * і додасть у DOM-дерево.
+ */
+
+// ------------------------------------------------------------------------------------
+
+const title = document.querySelector(".article .title");
+title.innerHTML = 'New and <span class="accent">improved</span> title';
+
+// -------------------------------------------------------------------------------------
+/**
+ * Однотипна (шаблонна) розмітка створюється із масиву даних.
+ * Прийом полягає в перебиранні цього масиву та створенні одного рядка з HTML-тегами,
+ * який потім записуємо в innerHTML елемента. Якщо ти будеш це робити за допомогою методу map(),
+ * не забудь, що він повертає масив. Отже, перед тим як додавати розмітку в DOM, цей масив треба
+ * привести до рядка за допомогою методу join()
+ */
+
+/**
+ * <section>
+ * <h2>Popular technologies</h2>
+ * <ul class="list"></ul>
+ * </section>
+ */
+
+const technologies = ["HTML", "CSS", "JavaScript", "React", "Node"];
+const list = document.querySelector(".list");
+
+const markup = technologies
+  .map((technology) => `<li class="list-item">${technology}</li>`)
+  .join("");
+
+// Check the console, you'll see a single string with HTML tags
+console.log(markup);
+
+// Adding all the markup in one operation
+list.innerHTML = markup;
+
+/**
+ * Нове значення для element.innerHTML повністю видалить і повторно створить
+ * усіх нащадків елемента element. Якщо елемент спочатку не був порожній, то
+ * виникнуть додаткові витрати на повторне створення вже існуючої розмітки, а це погано.
+ *
+ * Використовуй властивість element.innerHTML для додавання тільки у разі,
+ * — коли елемент element порожній або
+ * — якщо потрібно повністю замінити вміст element
+ */
+
+// ------------------------------- insertAdjacentHTML() ---------------------------------
+
+const list = document.querySelector(".list");
+
+const newTechnologies = ["React", "TypeScript", "Node.js"];
+
+const markup = newTechnologies
+  .map((technology) => `<li class="list-item new">${technology}</li>`)
+  .join("");
+
+list.insertAdjacentHTML("beforeend", markup);
+list.insertAdjacentHTML("beforebegin", "<h2>Popular technologies</h2>");
+
+// ---------------------------------------------------------------------------------------
+// ----------------------------------- Події ---------------------------------------------
+// ---------------------------------------------------------------------------------------
+
+// ---------------------------- Метод addEventListener() ---------------------------------
+
+const button = document.querySelector(".my-button");
+
+button.addEventListener("click", () => {
+  console.log("The button was pressed and now the next image will appear");
+});
+
+/**
+ * Для колбека можна використовувати не анонімну, а окрему функцію, передаючи на неї
+ * посилання, як це реалізовано у прикладі нижче. Іменована функція підвищує читабельність коду.
+ */
+
+const button = document.querySelector(".my-button");
+
+const handleClick = () => {
+  console.log("The button was pressed and now the next image will appear");
+};
+
+button.addEventListener("click", handleClick);
+
+// ---------------------------------------------------------------------------------------
+/**
+ * На одному елементі може бути будь-яка кількість обробників подій, навіть подій одного типу.
+ * Колбек-функції будуть викликатися в порядку їхньої реєстрації в коді.
+ *
+ * <button id="single"
+ * class="btn">SINGLE CALLBACK</button>
+ * <hr>
+ * <button id="multiple" class="btn">MULTIPLE
+ * CALLBACKS</button>
+ *
+ */
+
+const singleBtn = document.querySelector("#single");
+
+const handleClick = () => {
+  console.log("click event listener callback");
+};
+
+singleBtn.addEventListener("click", handleClick);
+
+// ===============================================
+
+const multiBtn = document.querySelector("#multiple");
+
+const firstCallback = () => {
+  console.log("First callback!");
+};
+const secondCallback = () => {
+  console.log("Second callback!");
+};
+const thirdCallback = () => {
+  console.log("Third callback!");
+};
+
+multiBtn.addEventListener("click", firstCallback);
+multiBtn.addEventListener("click", secondCallback);
+multiBtn.addEventListener("click", thirdCallback);
+
+// -------------------------------------------- submit -------------------------------------------------------
+
+/**
+ * Подія submit відбувається безпосередньо на формі (тег form),
+ * тому обробник подій слід встановлювати саме на ній.
+ * Подію submit можна застосувати для валідації (перевірки) форми перед відправленням,
+ * оскільки на об'єкті події існує багато корисних властивостей, пов'язаних з елементами форми.
+ */
+
+/**
+ * <form class="form" autocomplete="off">
+ * <input type="text" name="login" placeholder="Login">
+ * <input type="password" name="password" placeholder="Password">
+ * <button class="btn" type="submit">Register</button>
+ * </form>
+ */
+
+const registerForm = document.querySelector(".form");
+
+registerForm.addEventListener("submit", handleSubmit);
+
+function handleSubmit(event) {
+  event.preventDefault();
+  const form = event.target;
+  const login = form.elements.login.value;
+  const password = form.elements.password.value;
+
+  if (login === "" || password === "") {
+    return console.log("Please fill in all the fields!");
+  }
+
+  console.log(`Login: ${login}, Password: ${password}`);
+  form.reset();
+}
+
+/**
+ * Властивість elements DOM-елемента форми містить об'єкт з посиланнями на всі її елементи,
+ * які мають атрибут name. Саме тому в прикладі ми отримуємо значення полів, звертаючись
+ * до event.target.elements.login.value і event.target.elements.password.value.
+ */
+
+/**
+ *
+ * Подія click
+ *
+ * Натискаючи на кнопку "Click me" змусь
+ * червоний квардатик зміщуватись на 50px по діагоналі
+ *
+ */
+
+// const btn = document.querySelector(".js-click");
+// const box = document.querySelector(".js-box");
+
+// btn.addEventListener("click", handleClick);
+// box.addEventListener("click", handleClick);
+
+// let step = 0;
+
+// function handleClick() {
+//   step += 50;
+//   box.style.marginTop = `${step}px`;
+//   box.style.marginLeft = `${step}px`;
+// }
+
+// --------------------------------------------------------------------------------------------
+
+/**
+ *
+ * - Подія change
+ * - Подія input
+ * - Подія blur
+ *
+ * Виводить в консоль все, що користувач вводить в input
+ */
+
+// -------------------------------------- Подія change ------------------------------------------
+
+const jsCheckbox = document.querySelector(".js-checkbox");
+
+jsCheckbox.addEventListener("change", () => {
+  console.log("ok");
+});
+
+// -------------------------------------- Подія input ------------------------------------------
+
+const userName = document.querySelector("js-user-name");
+
+userName.addEventListener("input", (event) => {
+  console.log(event.target.value);
+  // event це об'єкт події
+  // target - посилання на наш елемент в якому відюулась подія
+  // value - з неї, з її інтерактивного поля ми будемо отримувати введені дані
+  // можна написати userName.value і отримати ці ж дані, але робити так не потрібно (для розуміння)
+});
+
+// ----------------------------------------------------------------------------------------------
+
+/**
+ * Користувач вводить в input своє імя після втрати
+ * фокусу отримує alert з повідомленням-привітанням
+ */
+
+const userName = document.querySelector("js-user-name");
+
+userName.addEventListener("focus", () => {
+  console.log("ok");
+});
+
+userName.addEventListener("blur", (event) => {
+  const name = event.target.value;
+
+  alert(`Hello ${name}`);
+});
+
+// -----------------------------------------------------------------------------------------------
+
+/**
+ *
+ * - Подія submit
+ * - Дії браузера за замовчуванням
+ * - Властивість elements
+ *
+ * Оброби форму та збери відгук користувача в об'єкт
+ */
+
+const form = document.querySelector(".js-form");
+
+form.addEventListener("submit", hadleSubmit);
+
+function hadleSubmit(event) {
+  event.preventDefault(); // вимикає дефолтні значення браузера (при відправленні форми сторінка не перезавантажується)
+
+  const elements = event.target.elements;
+
+  const info = {
+    email: elements.email.value,
+    password: elements.password.value,
+    comment: elements.comment.value,
+  };
+
+  console.log(info);
+  event.target.reset();
+}
+
+// -----------------------------------------------------------------------------------------------------------------
