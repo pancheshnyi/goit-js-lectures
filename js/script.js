@@ -2786,3 +2786,172 @@ function hadleSubmit(event) {
 }
 
 // -----------------------------------------------------------------------------------------------------------------
+
+/**
+ * Типи подій: keypress, keydown, keyup
+ * - Обмеження keypress
+ * - Власивості key та code
+ */
+
+document.addEventListener("keypress", handkeKeyPress);
+
+function handkeKeyPress(event) {
+  console.log(event.key);
+}
+
+// ------------------------------------------------------------------------------------------------------------------
+
+document.addEventListener("keydown", handkeKeyPress); // подія коли натискаємо клавішу
+
+function handkeKeyPress(event) {
+  console.log(event.key);
+  console.log(event.code);
+}
+
+// ------------------------------------------------------------------------------------------------------------------
+
+document.addEventListener("keyup", handleKeyPress); // подія коли відпускаємо клавішу
+
+function handleKeyPress(event) {
+  if (event.code === "Escape") {
+    console.log("Escape");
+  } else {
+    console.log("Ooops");
+  }
+}
+
+/**
+ * Обробка комбінацій клавіш
+ */
+
+document.addEventListener("keydown", handleKeysPress);
+
+function handleKeysPress(event) {
+  if (event.ctrlKey && event.code === "KeyC") {
+    event.preventDefault();
+  }
+}
+
+// ----------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------
+
+/**
+ * Події миші
+ * - mouseenter і mouseleave (це ховер)
+ * - mouseover і mouseout
+ * - mousemove (chatty event - балакуча подія)
+ */
+
+// const box = document.querySelector(".js-box");
+
+// box.addEventListener("mouseenter", onMouseEnter);
+// box.addEventListener("mouseleave", onMouseLeave);
+
+// function onMouseEnter() {
+//   console.log("mouseenter");
+//   box.classList.add("box--active"); // створюємо новий клас
+// }
+
+// function onMouseLeave() {
+//   console.log("mouseleave");
+//   box.classList.remove("box--active"); // видаляємо клас
+// }
+
+// --------------------------------------------------------------------------------------------------
+
+// const box = document.querySelector(".js-box");
+
+// box.addEventListener("mouseover", onMouseOver);
+// box.addEventListener("mouseout", onMouseOut);
+
+// function onMouseOver() {
+//   console.log("onMouseOver");
+// }
+
+// function onMouseOut() {
+//   console.log("onMouseOut");
+// }
+
+// ---------------------------------------------------------------------------------------------------
+
+const box = document.querySelector(".js-box");
+
+box.addEventListener("mousemove", onMouseMove);
+
+function onMouseMove(event) {
+  console.log(event);
+}
+
+// -------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------
+/**
+ * Реалізуй пошук автомобілів по сайту
+ * Користувач потрапляє на сайт і одразу бачить форму для пошуку
+ * і картинки всіх автомобілів (масив cars)
+ * Користувач може ввести в форму назву Марки або Моделі авто і в
+ * тегу селект обрати що він обрав Марку або Модель
+ * Після натискання кнопки пошуку (сабміт форми) відмалюй авто
+ * які збігаються з критеріями пошуку
+ */
+
+/**
+ *
+ * фрагмент html коду, форма з якою працюємо
+ *
+ * <form action="submit" class="js-form car-search">
+ *   <div class="car-group">
+ *     <input type="text" name="query" class="car-input" placeholder="Пошук">
+ *   </div>
+ *   <div class="car-group">
+ *     <select name="options" class="car-select">
+ *       <option value="car">Марка</option>
+ *       <option value="type">Модель</option>
+ *    </select>
+ *   </div>
+ *   <button type="submit" class="car-button">Пошук</button>
+ * </form>
+ *
+ */
+
+const form = document.querySelector(".js-form");
+const container = document.querySelector(".js-list");
+
+form.addEventListener("submit", handleSubmit);
+
+function createMarkup(arr) {
+  return arr
+    .map(
+      (car) => `
+    <li class="car-card">
+    <img scr="${car.img}" alt="${car.type}" class="car-image"/>
+    <h2 class="car-title">${car.car}</h2>
+    <h3 class="car-type">${car.type}</h3>
+    <p class="car-price">${car.price}</p>
+    </li>
+  `
+    )
+    .join("");
+}
+
+container.style.display = "flex";
+container.style.flexWrap = "wrap";
+container.style.gap = "25px";
+
+container.insertAdjacentHTML("beforeend", createMarkup(cars)); // додає в кінець
+
+function handleSubmit(event) {
+  event.preventDefault();
+
+  const query = event.target.elements.query.value;
+  const options = event.target.elements.options.value;
+
+  const result = cars.filter(
+    // (item) => item[options].toLowerCase() === query.toLowerCase;
+    (item) => item[options].toLowerCase.includes(query.toLowerCase())
+  );
+
+  container.innerHTML = createMarkup(result); // видаляє попередні записи і формує нові
+}
