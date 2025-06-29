@@ -2955,3 +2955,347 @@ function handleSubmit(event) {
 
   container.innerHTML = createMarkup(result); // видаляє попередні записи і формує нові
 }
+
+// ------------------------------------------- МОДУЛЬ 8-2 ---------------------------------------------
+// ----------------------------------------- ДЕСТРУКТУРИЗАЦІЯ -----------------------------------------
+// -----------------------------------------------------------------------------------------------------
+
+// -------------- Без деструктуризації -----------
+
+// const user = {
+//   name: "Jacob",
+//   age: 32,
+// };
+
+// console.log(user.name); // Jacob
+// console.log(user.age); // 32
+
+// --------------- Деструктуризуємо ---------------
+
+// const { name, age } = user;
+// console.log(name);
+// console.log(age);
+
+// ---------------------------------- ДЕСТРУКТУРИЗАЦІЯ ОБ'ЄКТІВ --------------------------------------------
+
+// --------- Без деструктуризації ---------
+
+// const book = {
+//   title: "The Last Kingdom",
+//   author: "Bernard Cornwell",
+//   genres: ["historical prose", "adventure"],
+//   isPublic: true,
+//   rating: 8.38,
+// };
+
+// const accessType = book.isPublic ? "public" : "private";
+// const message = `Book ${book.title} by author ${book.author} with rating ${book.rating} is in ${accessType} access!`;
+
+// ---------- Деструктуризуємо -------------
+
+const book = {
+  title: "The Last Kingdom",
+  author: "Bernard Cornwell",
+  genres: ["historical prose", "adventure"],
+  isPublic: true,
+  rating: 8.38,
+};
+
+const { title, author, genres, isPublic, rating } = book;
+
+const accessType = isPublic ? "public" : "private";
+const message = `Book ${title} by author ${author} with rating ${rating} is in ${accessType} access!`;
+
+// -------------------------------------- Деструктуризація неіснуючих властивостей ----------------------------
+
+/**
+ * Коли в об'єкті немає властивості з таким ім'ям, змінній буде присвоєно undefined.
+ */
+
+const book = {
+  title: "The Last Kingdom",
+  author: "Bernard Cornwell",
+  genres: ["historical prose", "adventure"],
+  isPublic: true,
+  rating: 8.38,
+};
+
+// Деструктуризуємо
+
+const { title, bookTitle, coverImage, bookRating } = book;
+
+console.log(title); // "The Last Kingdom"
+console.log(bookTitle); // undefined
+console.log(coverImage); // undefined
+console.log(bookRating); // undefined
+
+/**
+ * З метою уникнення присвоєння undefined під час деструктуризації неіснуючих властивостей,
+ * можна задати змінним значення за замовчуванням, використовуючи знак =. Це значення буде
+ * рисвоєно тільки у випадку, коли в об'єкті відсутня властивість із таким ім'ям.
+ */
+
+const book = {
+  title: "The Last Kingdom",
+  author: "Bernard Cornwell",
+};
+
+// Додамо зображення обкладинки, якщо вона відсутня в об'єкті книги
+const {
+  title,
+  author,
+  coverImage = "https://via.placeholder.com/640/480",
+} = book;
+
+console.log(title); // "The Last Kingdom"
+console.log(author); // "Bernard Cornwell"
+console.log(coverImage); // "https://via.placeholder.com/640/480"
+
+// ---------------------------------- Перейменування змінної ----------------------------
+
+/**
+ * Під час деструктуризації можна перейменувати змінну, в яку розпаковується значення
+ * властивості, використовуючи :
+ */
+
+const book = {
+  title: "The Last Kingdom",
+  author: "Bernard Cornwell",
+  genres: ["historical prose", "adventure"],
+  isPublic: true,
+  rating: 8.38,
+};
+
+// Деструктуризуємо
+
+const { title, author: bookAuthor, isPublic, rating: bookRating } = book;
+
+console.log(title); // "The Last Kingdom"
+console.log(bookAuthor); // "Bernard Cornwell"
+console.log(isPublic); // true
+console.log(bookRating); // 8.38
+
+// ----------------------------- Значення за замовчуванням -------------------------------------------
+/**
+ * При перейменуванні змінної, в яку ми розпаковуємо значення властивості об'єкта, також
+ * можна присвоїти значення за замовчуванням. Для цього після нового імені ставимо дорівнює
+ * = і вказуємо її значення за замовчуванням. Якщо така властивість існує в об'єкті, у змінну буде
+ * присвоєно її значення.В іншому випадку змінній буде присвоєно значення за замовчуванням.
+ */
+
+const book = {
+  title: "The Last Kingdom",
+  coverImage:
+    "https://images-na.ssl-images-amazon.com/images/I/51b5YG6Y1rL.jpg",
+};
+
+const {
+  title,
+  coverImage: bookCoverImage = "https://via.placeholder.com/640/480",
+} = book;
+
+console.log(title); // "The Last Kingdom"
+console.log(bookCoverImage); // "https://images-na.ssl-images-amazon.com/images/I/51b5YG6Y1rL.jpg"
+
+// ------------------------------------- Деструктуризація в циклах --------------------------------
+
+// --------- Без деструктуризації ---------
+
+const books = [
+  {
+    title: "The Last Kingdom",
+    author: "Bernard Cornwell",
+    rating: 8.38,
+  },
+  {
+    title: "Beside Still Waters",
+    author: "Robert Sheckley",
+    rating: 8.51,
+  },
+];
+
+for (const book of books) {
+  console.log(book.title);
+  console.log(book.author);
+  console.log(book.rating);
+}
+
+// ----------- Деструктуризуємо ------------------------------
+
+for (const book of books) {
+  const { title, author, rating } = book;
+
+  console.log(title);
+  console.log(author);
+  console.log(rating);
+}
+
+/**
+ * Якщо об'єкт містить небагато властивостей, деструктуризацію
+ * можна виконати безпосередньо в місці оголошення змінної book.
+ */
+
+for (const { title, author, rating } of books) {
+  console.log(title);
+  console.log(author);
+  console.log(rating);
+}
+
+// --------------------------------- Деструктуризація параметрів ---------------------------
+
+/**
+ * Під час передачі об'єктів у функції, можна деструктуризувати об'єкти, щоб отримати
+ * доступ до потрібних даних. Це дає змогу явно вказати, які поля об'єкта використовуються у функції.
+ */
+
+//
+// Без деструктуризації об'єкта
+//
+
+function printUserInfo(user) {
+  console.log(`Name: ${user.name}, Age: ${user.age}, Hobby: ${user.hobby}`);
+}
+
+printUserInfo({
+  name: "Alice",
+  age: 25,
+  hobby: "dancing",
+}); // Name: Alice, Age: 25, Hobby: dancing
+
+//
+// З деструктуризацією об'єкта в тілі функції
+//
+
+function printUserInfo(user) {
+  const { name, age, hobby } = user;
+  console.log(`Name: ${name}, Age: ${age}, Hobby: ${hobby}`);
+}
+
+printUserInfo({
+  name: "Alice",
+  age: 25,
+  hobby: "dancing",
+}); // Name: Alice, Age: 25, Hobby: dancing
+
+//
+// Із деструктуризацією об'єкта в місці оголошення параметрів
+//
+
+function printUserInfo({ name, age, hobby }) {
+  console.log(`Name: ${name}, Age: ${age}, Hobby: ${hobby}`);
+}
+
+printUserInfo({
+  name: "Alice",
+  age: 25,
+  hobby: "dancing",
+}); // Name: Alice, Age: 25, Hobby: dancing
+
+// --------------------------- Патерн «Об'єкт параметрів» ---------------------------------
+
+function doStuffWithBook(book) {
+  // Робимо щось з властивостями об'єкта
+  console.log(book.title);
+  console.log(book.pages);
+  // І так далі
+}
+
+doStuffWithBook({
+  title: "The Last Kingdom",
+  pages: 736,
+  downloads: 10283,
+  rating: 8.38,
+  isPublic: true,
+});
+
+//
+// деструктуризуємо об'єкт у параметрі book
+//
+
+function doStuffWithBook(book) {
+  const { title, pages, downloads, rating, isPublic } = book;
+  console.log(title);
+  console.log(pages);
+}
+
+//
+// або в сигнатурі (підписі) функції — різниці немає
+//
+
+function doStuffWithBook({ title, pages, downloads, rating, isPublic }) {
+  console.log(title);
+  console.log(pages);
+}
+
+// --------------------------------- Глибока деструктуризація ------------------------------------
+
+const user = {
+  name: "Jacques Gluke",
+  tag: "jgluke",
+  stats: {
+    followers: 5603,
+    views: 4827,
+    likes: 1308,
+  },
+};
+
+const { name, tag, stats } = user;
+
+console.log(name); // Jacques Gluke
+console.log(tag); // jgluke
+console.log(stats); // { followers: 5603, views: 4827, likes: 1308 }
+
+//
+// додамо глибоку деструктуризацію властивостей об'єкта stats
+/**
+ * Для цього в деструктуризації після імені властивості
+ * ставимо двокрапку : та починаємо деструктуризацію об'єкта для цієї властивості.
+ */
+//
+
+const user = {
+  name: "Jacques Gluke",
+  tag: "jgluke",
+  stats: {
+    followers: 5603,
+    views: 4827,
+    likes: 1308,
+  },
+};
+
+const {
+  name,
+  tag,
+  stats: { followers, views, likes },
+} = user;
+
+console.log(name); // Jacques Gluke
+console.log(tag); // jgluke
+console.log(followers); // 5603
+console.log(views); // 4827
+console.log(likes); // 1308
+
+// Під час глибокої деструктуризації також можна змінювати
+// імена змінних і присвоювати значення за замовчуванням.
+
+const user = {
+  name: "Jacques Gluke",
+  tag: "jgluke",
+  stats: {
+    followers: 5603,
+    views: 4827,
+    likes: 1308,
+  },
+};
+
+const {
+  name,
+  tag,
+  stats: { followers = 0, views: userViews = 0, likes: userLikes = 0 },
+} = user;
+
+console.log(name); // Jacques Gluke
+console.log(tag); // jgluke
+console.log(followers); // 5603
+console.log(userViews); // 4827
+console.log(userLikes); // 1308
